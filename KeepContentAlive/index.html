@@ -28,6 +28,7 @@
 </head>
 <body>
 <h1>試著不要讓警告出現</h1>
+<div id="randomKey"></div>
 <div class="warning" id="warningMessage">WARNING: Pay attention!</div>
 
 <script>
@@ -45,10 +46,26 @@
 
   // Show warning message every 10 seconds
   setInterval(function() {
-    alert("WARNING: Pay attention!");
+    alert(`${document.getElementById("randomKey").textContent} 已經過期`);
+    document.getElementById("randomKey").textContent = "Random Key: " + randomKey + "已經過期";
     showWarning();
     setTimeout(hideWarning, 2000); // Hide the warning after 2 seconds
   }, 5000); // 10 seconds in milliseconds
 </script>
+<script>
+    // Function to generate a random key
+    function generateRandomKey(length) {
+      const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let key = '';
+      for (let i = 0; i < length; i++) {
+        key += charset.charAt(Math.floor(Math.random() * charset.length));
+      }
+      return key;
+    }
+  
+    // Generate a random key and display it
+    const randomKey = generateRandomKey(10); // Change 10 to desired key length
+    document.getElementById("randomKey").textContent = "Random Key: " + randomKey;
+  </script>
 </body>
 </html>
