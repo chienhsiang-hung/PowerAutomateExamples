@@ -27,9 +27,9 @@
 </style>
 </head>
 <body>
-<h1>試著不要讓警告出現</h1>
+<h1>試著不要讓警告出現 讓key持續存活</h1>
 <div id="randomKey"></div>
-<div class="warning" id="warningMessage">WARNING: Pay attention!</div>
+<div class="warning" id="warningMessage">XD you're too late WARNING: Pay attention!</div>
 
 <script>
   // Function to display the warning message
@@ -45,12 +45,12 @@
   }
 
   // Show warning message every 10 seconds
-  setInterval(function() {
-    document.getElementById("randomKey").textContent = "Random Key: " + randomKey + "已經過期";
+  setTimeout(function() {
+    document.getElementById("randomKey").textContent += "已經過期";
     alert(document.getElementById("randomKey").textContent);
     showWarning();
     setTimeout(hideWarning, 2000); // Hide the warning after 2 seconds
-  }, 5000); // 10 seconds in milliseconds
+  }, 5000); // 5 seconds in milliseconds
 </script>
 <script>
     // Function to generate a random key
