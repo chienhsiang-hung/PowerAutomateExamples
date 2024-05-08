@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warning Every 10 Seconds</title>
+<style>
+  .warning {
+    display: none;
+    color: red;
+    font-weight: bold;
+  }
+</style>
+</head>
 <body>
+<h1>試著不要讓警告出現</h1>
+<div class="warning" id="warningMessage">WARNING: Pay attention!</div>
 
-<h1>My First Heading</h1>
+<script>
+  // Function to display the warning message
+  function showWarning() {
+    var warningDiv = document.getElementById("warningMessage");
+    warningDiv.style.display = "block";
+  }
 
-<p>My first paragraph.</p>
+  // Function to hide the warning message
+  function hideWarning() {
+    var warningDiv = document.getElementById("warningMessage");
+    warningDiv.style.display = "none";
+  }
 
+  // Show warning message every 10 seconds
+  setInterval(function() {
+    alert("WARNING: Pay attention!");
+    // showWarning();
+    // setTimeout(hideWarning, 2000); // Hide the warning after 2 seconds
+  }, 5000); // 10 seconds in milliseconds
+</script>
 </body>
 </html>
