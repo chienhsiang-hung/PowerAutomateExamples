@@ -46,8 +46,8 @@
 
   // Show warning message every 10 seconds
   setInterval(function() {
-    alert(`${document.getElementById("randomKey").textContent} 已經過期`);
     document.getElementById("randomKey").textContent = "Random Key: " + randomKey + "已經過期";
+    alert(document.getElementById("randomKey").textContent);
     showWarning();
     setTimeout(hideWarning, 2000); // Hide the warning after 2 seconds
   }, 5000); // 10 seconds in milliseconds
