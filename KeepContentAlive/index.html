@@ -36,6 +36,7 @@
 <div id="randomKey"></div>
 <div class="warning" id="warningMessage">XD you're too late WARNING: Pay attention!</div>
 <div class="info" id="infoMessage">Congratulation!</div>
+<span>Rand num: </span><span id="infoMessage1"></span>
 
 <script>
   // Function to display the warning message
@@ -84,6 +85,7 @@
 
   // Call the function to decide whether to show the info
   showRandomInfo();
+  document.getElementById("infoMessage1").textContent += Math.random()
 </script>
 </body>
 </html>
