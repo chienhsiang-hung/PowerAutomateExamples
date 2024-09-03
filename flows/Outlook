@@ -1,0 +1,6 @@
+Outlook.Launch Instance=> OutlookInstance
+Outlook.RetrieveEmailMessages.RetrieveEmails Instance: OutlookInstance Account: $'''hsiang.hung@fubon.com''' MailFolder: $'''inbox''' EmailsToRetrieve: Outlook.RetrieveMessagesMode.Unread MarkAsRead: False ReadBodyAsHtml: False FromContains: $'''hsiang.hung@fubon.com''' Messages=> RetrievedEmails
+LOOP WHILE (RetrievedEmails[0].Subject) <> ($'''Hi''')
+    Outlook.RetrieveEmailMessages.RetrieveEmails Instance: OutlookInstance Account: $'''hsiang.hung@fubon.com''' MailFolder: $'''inbox''' EmailsToRetrieve: Outlook.RetrieveMessagesMode.Unread MarkAsRead: False ReadBodyAsHtml: False FromContains: $'''hsiang.hung@fubon.com''' Messages=> RetrievedEmails
+END
+Outlook.RespondToMailMessage.ReplyToEmail Instance: OutlookInstance Account: $'''hsiang.hung@fubon.com''' MailMessage: RetrievedEmails[0] Body: $'''OK'''
