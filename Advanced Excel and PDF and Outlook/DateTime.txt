@@ -1,0 +1,6 @@
+SET NewVar TO D'2022/03/26 11:30:00'
+DISABLE Variables.IncreaseVariable Value: NewVar IncrementValue: 1
+DateTime.Add DateTime: NewVar TimeToAdd: 1 TimeUnit: DateTime.TimeUnit.Days ResultedDate=> ResultedDate
+SET NewVar2 TO $'''2024/9/3'''
+Text.ConvertTextToDateTime.ToDateTimeCustomFormat Text: NewVar2 CustomFormat: $'''yyyy/M/d''' DateTime=> TextAsDateTime
+DateTime.Subtract FromDate: TextAsDateTime SubstractDate: NewVar TimeUnit: DateTime.DifferenceTimeUnit.Days TimeDifference=> TimeDifference

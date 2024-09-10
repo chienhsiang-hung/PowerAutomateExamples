@@ -1,0 +1,20 @@
+FUNCTION PDF GLOBAL
+    Pdf.ExtractTablesFromPDF.ExtractTablesFromPage PDFFile: $'''C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\2023_C_ESG.pdf''' PageNumber: 2 MultiPageTables: True SetFirstRowAsHeader: True ExtractedPDFTables=> ExtractedPDFTables
+    Pdf.ExtractImagesFromPDF.ExtractImagesFromPage PDFFile: $'''C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\2023_C_ESG.pdf''' PageNumber: 1 ImagesName: 1 ImagesFolder: $'''C:\\Users\\hsiang.hung\\Downloads'''
+    LOOP LoopIndex3 FROM 1 TO 5 STEP 1
+        Pdf.ExtractPages PDFFile: $'''C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\2023_C_ESG.pdf''' PageSelection: LoopIndex3 ExtractedPDFPath: $'''C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\test\\%LoopIndex3%.pdf''' IfFileExists: Pdf.IfFileExists.AddSequentialSuffix ExtractedPDFFile=> ExtractedPDF
+        Pdf.ExtractPages PDFFile: $'''C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\2023_C_ESG.pdf''' PageSelection: LoopIndex3 ExtractedPDFPath: $'''C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\test\\%LoopIndex3%.pdf''' IfFileExists: Pdf.IfFileExists.AddSequentialSuffix ExtractedPDFFile=> ExtractedPDF
+    END
+    DISABLE LOOP LoopIndex4 FROM 1 TO 208 STEP 1
+        DISABLE Pdf.ExtractTextFromPDF.ExtractTextFromPage PDFFile: $'''C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\2023_C_ESG.pdf''' PageNumber: LoopIndex4 DetectLayout: False ExtractedText=> ExtractedPDFText
+        DISABLE IF Contains(ExtractedPDFText, ``, False) THEN
+            DISABLE Pdf.ExtractPages PDFFile: $'''C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\2023_C_ESG.pdf''' PageSelection: `%a&-%b%` ExtractedPDFPath: $'''C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\test\\%LoopIndex3%.pdf''' IfFileExists: Pdf.IfFileExists.AddSequentialSuffix ExtractedPDFFile=> ExtractedPDF
+        DISABLE END
+    DISABLE END
+    Pdf.MergeFiles PDFFiles: ['C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\test\\1.pdf', 'C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\test\\2.pdf', 'C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\test\\3.pdf', 'C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\test\\4.pdf', 'C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\test\\5.pdf'] MergedPDFPath: $'''C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\test\\combined.pdf''' IfFileExists: Pdf.IfFileExists.AddSequentialSuffix PasswordDelimiter: $''',''' MergedPDF=> MergedPDF2
+    LOOP LoopIndex FROM 1 TO 3 STEP 1
+        Pdf.ExtractPages PDFFile: $'''C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\2023_C_ESG.pdf''' PageSelection: LoopIndex ExtractedPDFPath: $'''C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\test%LoopIndex%.pdf''' IfFileExists: Pdf.IfFileExists.AddSequentialSuffix ExtractedPDFFile=> ExtractedPDF
+    END
+    Folder.GetFiles Folder: $'''C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\extracted pdfs''' FileFilter: $'''test*''' IncludeSubfolders: False FailOnAccessDenied: True SortBy1: Folder.SortBy.Name SortDescending1: True SortBy2: Folder.SortBy.NoSort SortDescending2: False SortBy3: Folder.SortBy.NoSort SortDescending3: False Files=> Files
+    Pdf.MergeFiles PDFFiles: Files MergedPDFPath: $'''C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\combined.pdf''' IfFileExists: Pdf.IfFileExists.AddSequentialSuffix PasswordDelimiter: $''',''' MergedPDF=> MergedPDF
+END FUNCTION

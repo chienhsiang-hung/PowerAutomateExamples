@@ -1,0 +1,26 @@
+FUNCTION Excel GLOBAL
+    Excel.LaunchExcel.LaunchAndOpenUnderExistingProcess Path: $'''C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\重複開啟.xlsx''' Visible: True ReadOnly: False Instance=> ExcelInstance
+    Excel.Attach DocumentName: $'''重複開啟.xlsx''' Instance=> ExcelInstance
+    Excel.FindAndReplace.FindAndReplaceSingle Instance: ExcelInstance TextToFind: $'''First Name''' TextToReplaceWith: $'''名字''' MatchCase: False MatchEntireCellContents: False SearchBy: Excel.SearchOrder.Rows FoundColumnIndex=> FoundColumnIndex2 FoundRowIndex=> FoundRowIndex2
+    DISABLE Excel.WriteToExcel.WriteCell Instance: ExcelInstance Value: $'''%''%''' Column: 3 Row: 3
+    DISABLE Excel.AddWorksheet Instance: ExcelInstance Name: $'''SheetABC''' WorksheetPosition: Excel.WorksheetPosition.Last
+    DISABLE Excel.GetFirstFreeColumnRow Instance: ExcelInstance FirstFreeColumn=> FirstFreeColumn FirstFreeRow=> FirstFreeRow
+    SET NewVar5 TO [1, 2, 3]
+    DISABLE Excel.WriteToExcel.WriteCell Instance: ExcelInstance Value: ['First Name', 'Last Name', 'Age', 'State', 'City'] Column: 1 Row: 1
+    SET NewVar3 TO {['First Name', 'Last Name', 'Age', 'State', 'City'], ['First Name', 'Last Name', 'Age', 'State', 'City'] }
+    DISABLE Excel.WriteToExcel.WriteCell Instance: ExcelInstance Value: NewVar3 Column: 1 Row: 1
+    Excel.WriteToExcel.WriteCell Instance: ExcelInstance Value: {['First Name', 'Last Name', 'Age', 'State', 'City'], ['大名', '黃', 40, '台北市', '中山區'] } Column: 1 Row: 1
+    Excel.ResizeColumnsOrRows.ResizeSingleRow Instance: ExcelInstance Row: 1 Height: 30
+    Excel.CopyCellsFromExcel.CopyCells Instance: ExcelInstance StartColumn: 1 StartRow: 2 EndColumn: 5 EndRow: 2
+    SET NewVar4 TO [1, 2]
+    SET NewVar4 TO NewVar4 + 3
+    Excel.Attach DocumentName: $'''重複開啟.xlsx''' Instance=> ExcelInstance
+    SET eng_list TO ['First Name', 'Last Name', 'Age', 'State', 'City']
+    SET ch_list TO ['名字', '姓氏', '年齡', '省', '城市']
+    LOOP LoopIndex2 FROM 0 TO 4 STEP 1
+        Excel.FindAndReplace.FindAndReplaceSingle Instance: ExcelInstance TextToFind: eng_list[LoopIndex2] TextToReplaceWith: ch_list[LoopIndex2] MatchCase: False MatchEntireCellContents: False SearchBy: Excel.SearchOrder.Rows FoundColumnIndex=> FoundColumnIndex3 FoundRowIndex=> FoundRowIndex3
+    END
+    DISABLE LOOP FOREACH CurrentItem IN NewVar6
+        DISABLE Excel.FindAndReplace.FindAndReplaceSingle Instance: ExcelInstance TextToFind: CurrentItem TextToReplaceWith: 1 MatchCase: False MatchEntireCellContents: True SearchBy: Excel.SearchOrder.Rows FoundColumnIndex=> FoundColumnIndex FoundRowIndex=> FoundRowIndex
+    DISABLE END
+END FUNCTION
