@@ -1,0 +1,15 @@
+FUNCTION Outlookk GLOBAL
+    Outlook.Launch Instance=> OutlookInstance
+    SET NewVar7 TO { ^['ColumnName1', 'ColumnName2'], [1, 2] }
+    Outlook.SendEmailThroughOutlook.SendEmail Instance: OutlookInstance Account: $'''hsiang.hung@fubon.com''' SendTo: $'''hsiang.hung@fubon.com''' Subject: $'''t''' Body: { ^['ColumnName1', 'ColumnName2'], [1, 2] } IsBodyHtml: False IsDraft: False Attachments: ['C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\20240909\\combined (2).pdf', 'C:\\Users\\hsiang.hung\\OneDrive - Fubon Financial Holding Co., Ltd\\AWS\\20240909\\combined (3).pdf']
+    DISABLE Outlook.RetrieveEmailMessages.RetrieveEmails Instance: OutlookInstance Account: $'''hsiang.hung@fubon.com''' MailFolder: $'''inbox''' EmailsToRetrieve: Outlook.RetrieveMessagesMode.Unread MarkAsRead: False ReadBodyAsHtml: False FromContains: $'''hsiang.hung@fubon.com''' Messages=> RetrievedEmails2
+    DISABLE Outlook.SendEmailThroughOutlook.SendEmail Instance: OutlookInstance Account: $'''hsiang.hung@fubon.com''' SendTo: $'''hsiang.hung@fubon.com''' Subject: 123 Body: 456 IsBodyHtml: False IsDraft: False
+    Outlook.RetrieveEmailMessages.RetrieveEmails Instance: OutlookInstance Account: $'''hsiang.hung@fubon.com''' MailFolder: $'''inbox''' EmailsToRetrieve: Outlook.RetrieveMessagesMode.Unread MarkAsRead: False ReadBodyAsHtml: False FromContains: $'''hsiang.hung@fubon.com''' Messages=> RetrievedEmails
+    SET NewVar6 TO RetrievedEmails[1].Body
+    DISABLE LOOP WHILE (1) = (1)
+    DISABLE END
+    LOOP WHILE (RetrievedEmails[0].Subject) <> ($'''Hi''')
+        Outlook.RetrieveEmailMessages.RetrieveEmails Instance: OutlookInstance Account: $'''hsiang.hung@fubon.com''' MailFolder: $'''inbox''' EmailsToRetrieve: Outlook.RetrieveMessagesMode.Unread MarkAsRead: False ReadBodyAsHtml: False FromContains: $'''hsiang.hung@fubon.com''' Messages=> RetrievedEmails
+    END
+    Outlook.RespondToMailMessage.ReplyToEmail Instance: OutlookInstance Account: $'''hsiang.hung@fubon.com''' MailMessage: RetrievedEmails[0] Body: $'''OK'''
+END FUNCTION
